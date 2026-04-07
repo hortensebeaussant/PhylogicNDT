@@ -23,14 +23,14 @@ class TimingEngine(object):
     """
 
     def __init__(self, patient, cn_state_whitelist=_cn_state_whitelist, chromosomes=_chromosomes,
-                 arms=_arms, min_supporting_muts=3, min_chr_doubling=5, call_hyperdiploidy=False):
+                 arms=_arms, min_supporting_muts=3, min_chr_doubling=5, call_hyperdiploidy=False, ref_build='GRCh38'):
         self.patient = patient
         self.cn_state_whitelist = cn_state_whitelist
         self.arm_regions = list(itertools.product(chromosomes, arms))
         self.min_supporting_muts = min_supporting_muts
         self.min_chr_doubling = min_chr_doubling
         self.call_hyperdiploidy = call_hyperdiploidy
-        self.ref_build = self.patient.ref_build  # ref_build is already sent by patient class
+        self.ref_build = ref_build  # ref_build not sent by patient class, GRCh38 by default, TODO: refactor to send ref_build from patient class (self.ref_build = selfpatient.ref_build)
         self.sample_list = []
         for sample in self.patient.sample_list:
             timing_sample = TimingSample(sample, self)
