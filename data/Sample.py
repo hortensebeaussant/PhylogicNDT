@@ -227,7 +227,7 @@ class TumorSample:
                     if sample_id == self.sample_name:
                         cluster_id = int(values[header['Cluster_Assignment']])
                         chromosome = values[header['Chromosome']]
-                        position = values[header['Start_position']]
+                        position = values[header['Start_Position']]
                         ref = values[header['Reference_Allele']]
                         alt = values[header['Tumor_Seq_Allele']]
                         ccf_1d = [float(values[header[i]]) for i in ccf_headers]
@@ -291,10 +291,10 @@ class TumorSample:
             if not spl:
                 continue
             if "Chromosome" in h:
-                std_param = [spl[h["Chromosome"]], spl[h["Start_position"]], spl[h["Reference_Allele"]],
+                std_param = [spl[h["Chromosome"]], spl[h["Start_Position"]], spl[h["Reference_Allele"]],
                              spl[h["Tumor_Seq_Allele2"]]]
             else:
-                # assume that first 4 'Chromosome','Start_position','Reference_Allele','Tumor_Seq_Allele2'
+                # assume that first 4 'Chromosome','Start_Position','Reference_Allele','Tumor_Seq_Allele2'
                 std_param = spl[:4]
 
             if calc_ccf:

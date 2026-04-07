@@ -207,7 +207,7 @@ class PhylogicOutput(object):
                 hugo = fields['Hugo_Symbol']
                 prot_change = fields['Protein_change']
                 chrom = fields['Chromosome']
-                pos = fields['Start_position']
+                pos = fields['Start_Position']
                 ref = fields['Reference_Allele']
                 alt = fields['Tumor_Seq_Allele']
                 ref_cnt = fields['t_ref_count']
@@ -887,7 +887,7 @@ class PhylogicOutput(object):
             cluster_ccfs: maps cluster ID to ccf histogram list (corresponding to samples in patient.sample_list)
             aliases: list of sample aliases (corresponding to samples in patient.sample_list)
         """
-        header = ['Patient_ID', 'Sample_ID', 'Sample_Alias', 'Hugo_Symbol', 'Chromosome', 'Start_position',
+        header = ['Patient_ID', 'Sample_ID', 'Sample_Alias', 'Hugo_Symbol', 'Chromosome', 'Start_Position',
                   'Reference_Allele', 'Tumor_Seq_Allele', 't_ref_count', 't_alt_count', 'Protein_change',
                   'Variant_Classification', 'Variant_Type', 'Cluster_Assignment', 'Allelic_CN_minor',
                   'Allelic_CN_major', 'preDP_ccf_mean', 'preDP_ccf_CI_low', 'preDP_ccf_CI_high', 'clust_ccf_mean',
@@ -935,8 +935,8 @@ class PhylogicOutput(object):
                         f.write('\n' + '\t'.join(map(str, line)))
 
     def write_patient_unclustered_events(self, patient):
-        header = ['Patient_ID', 'Sample_ID', 'Sample_Alias', 'Event_Name', 'Chromosome', 'Start_position',
-                  'End_position', 'Reference_Allele', 'Tumor_Seq_Allele', 't_ref_count', 't_alt_count',
+        header = ['Patient_ID', 'Sample_ID', 'Sample_Alias', 'Event_Name', 'Chromosome', 'Start_Position',
+                  'End_Position', 'Reference_Allele', 'Tumor_Seq_Allele', 't_ref_count', 't_alt_count',
                   'Protein_change', 'Variant_Classification', 'Variant_Type', 'preDP_ccf_mean', 'preDP_ccf_CI_low',
                   'preDP_ccf_CI_high']
         header.extend('preDP_ccf_{}'.format(float(x) / 100) for x in range(101))
@@ -1145,7 +1145,7 @@ class PhylogicOutput(object):
         Returns:
 
         """
-        header = ['Patient_ID', 'Event Name', 'Chromosome', 'Arm', 'Start_position', 'Reference_Allele',
+        header = ['Patient_ID', 'Event Name', 'Chromosome', 'Arm', 'Start_Position', 'Reference_Allele',
                   'Tumor_Seq_Allele', 't_ref_count', 't_alt_count', 'Allelic_CN_minor', 'Allelic_CN_major',
                   'Allelic_CN', 'pi_mean', 'pi_low', 'pi_high']
         header.extend('pi_{}'.format(float(x) / 100) for x in range(101))

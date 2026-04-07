@@ -32,7 +32,7 @@ class ClusteringResults:
                     cluster_id = int(values[header['Cluster_Assignment']])
                     if cluster_id not in self._removed_clusters:
                         chromosome = values[header['Chromosome']]
-                        position = values[header['Start_position']]
+                        position = values[header['Start_Position']]
                         ref = values[header['Reference_Allele']]
                         alt = values[header['Tumor_Seq_Allele']]
                         sample_id = values[header['Sample_ID']]

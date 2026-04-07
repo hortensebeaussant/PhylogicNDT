@@ -1,4 +1,4 @@
-ID	Chromosome	Start_position	End_Position	A1_CN	A2_CN
+ID	Chromosome	Start_Position	End_Position	A1_CN	A2_CN
 Test_Segment	1	1	125000000	1	1
 Test_Segment	1	125000001	249250621	1	2
 Test_Segment	2	1	93300000	1	1

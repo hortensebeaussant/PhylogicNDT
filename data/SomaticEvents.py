@@ -157,7 +157,7 @@ class SomMutation:
     @classmethod  # a class factory helper to build from different inputs
     def from_list(cls, li, from_sample=None, ccfgrid_size=101):
         ccf_list = li[
-                   4:ccfgrid_size + 4]  # skip first 4 element 'Chromosome','Start_position','Reference_Allele','Tumor_Seq_Allele2'
+                   4:ccfgrid_size + 4]  # skip first 4 element 'Chromosome','Start_Position','Reference_Allele','Tumor_Seq_Allele2'
         variant = li[:4]
         in_list = variant + [ccf_list] + li[ccfgrid_size + 4:]
         return cls(*in_list, from_sample=from_sample)

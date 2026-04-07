@@ -639,7 +639,7 @@ def run_simulations(args):
     for j in range(len(a)):
         with open(args.indiv_id + "_" + str(j) + ".txt", "w") as outccf:
             outccf.write("\t".join(
-                ["Hugo_Symbol", "Chromosome", "Start_position", "Reference_Allele", "Tumor_Seq_Allele2", "t_ref_count",
+                ["Hugo_Symbol", "Chromosome", "Start_Position", "Reference_Allele", "Tumor_Seq_Allele2", "t_ref_count",
                  "t_alt_count"]) + "\t")
             outccf.write("\t".join(['ccf_' + str('%.2f' % num) for num in np.linspace(0, 1, grid_size)]) + "\n")
 
