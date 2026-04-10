@@ -231,6 +231,9 @@ class Patient:
             if full_var_list.count(mut) == count_needed and mut not in blacklist:
                 vars_present_in_all.add(mut)
 
+        # temporarily_removed mutations are mutations with a low coverage, graylist
+        # joint_temporarily_removed : set of temporarily_removed in all samples
+        # to not use in concordant
         joint_temporarily_removed = set()
         for sample in self.sample_list:
             joint_temporarily_removed.update(sample.temporarily_removed)
@@ -242,6 +245,7 @@ class Patient:
         for sample in self.sample_list:
             if not self.impute_missing:
                 # reset any previous joint results ; if imputing leave as is
+                # of not imputing, will reset to keep only mutations that are present in all samples
                 sample.concordant_variants = []
             sample.concordant_with_samples = []
 
@@ -278,6 +282,7 @@ class Patient:
                                 str(mut), sample.sample_name))
                         continue
 
+                    # if impute flag, for mutations that are present in at least one sample and not graylisted, impute CCF as 0 in missing samples
                     elif mut.var_str not in joint_temporarily_removed and self.impute_missing:
                         for mis_sample in [x for x in self.sample_list if x != sample]:
                             if mut not in mis_sample.concordant_variants and mut not in mis_sample.mutations and mut.var_str not in joint_temporarily_removed and ":".join(

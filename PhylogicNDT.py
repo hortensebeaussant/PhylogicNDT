@@ -9,6 +9,7 @@ import logging
 import os
 import sys
 
+# add current directory to path to allow imports of modules in same directory
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/")
 
 # Remove all handlers associated with the root logger object.

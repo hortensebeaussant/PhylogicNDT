@@ -1,0 +1,6 @@
+#compilation of python files
+*.pyc
+phylogicndt.log
+.vscode/*
+.devcontainer/*
+MySimulation*

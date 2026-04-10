@@ -30,7 +30,7 @@ class TimingEngine(object):
         self.min_supporting_muts = min_supporting_muts
         self.min_chr_doubling = min_chr_doubling
         self.call_hyperdiploidy = call_hyperdiploidy
-        self.ref_build = ref_build  # ref_build not sent by patient class, GRCh38 by default, TODO: refactor to send ref_build from patient class (self.ref_build = selfpatient.ref_build)
+        self.ref_build = ref_build  # ref_build not sent by patient class, GRCh38 by default, TODO: refactor to send ref_build from patient class (self.ref_build = self.patient.ref_build)
         self.sample_list = []
         for sample in self.patient.sample_list:
             timing_sample = TimingSample(sample, self)
