@@ -268,6 +268,8 @@ class TumorSample:
         while header[0] == "#" or not header.strip():
             header = header.readline()
         header = header.strip().split("\t")
+        # dictionnary of column name to column location
+        # easier to access columns of a line by name, ex spl[h["Chromosome"]] instead of spl[n]
         h = collections.OrderedDict([[x[1], x[0]] for x in enumerate(header)])
 
         mutation_list = []
