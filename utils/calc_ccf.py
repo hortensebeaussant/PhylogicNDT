@@ -20,7 +20,6 @@ def calc_ccf(local_cn_a1, local_cn_a2, alt_cnt, ref_cnt, purity, grid_size=101):
     
     # If local CN is > 1, then the clonal CN is the floor (lower integer) and the subclonal CN is the ceiling (upper integer), 
     # with the subclonal fraction being the decimal remainder. 
-    print("local_cn_a1:", local_cn_a1, "local_cn_a2:", local_cn_a2)
     if local_cn_a1 > 1.:
         clonal_cn_a1 = np.floor(local_cn_a1)
         subclonal_cn_a1 = np.ceil(local_cn_a1)

@@ -52,8 +52,10 @@ def run_tool(args):
     #if not type(args.call_hrd) is bool:
     #    raise ValueError('Invalid value for call_hyperdiploidy. Expecting a boolean.')
     timing_engine = TimingEngine.TimingEngine(patient_data,
-                                              min_supporting_muts=args.min_supporting_muts,
-                                              call_hyperdiploidy=args.call_hrd)
+                                              min_supporting_muts=args.min_supporting_muts)
+    #timing_engine = TimingEngine.TimingEngine(patient_data,
+    #                                          min_supporting_muts=args.min_supporting_muts,
+    #                                          call_hyperdiploidy=args.call_hrd)
     #timing_engine = TimingEngine.TimingEngine(patient_data,
     #                                          min_supporting_muts=args.min_supporting_muts,
     #                                          min_chr_doubling=args.min_chr_doubling,

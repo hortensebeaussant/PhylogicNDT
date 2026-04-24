@@ -56,7 +56,7 @@ class ClusteringResults:
                                                              ref_cnt=t_ref_count,
                                                              alt_cnt=t_alt_count,
                                                              gene=values[header['Hugo_Symbol']],
-                                                             prot_change=values[header['Protein_change']],
+                                                             prot_change=values[header['Protein_Change']],
                                                              mut_category=values[header['Variant_Classification']],
                                                              from_sample=sample_id,
                                                              type_=var_type)
