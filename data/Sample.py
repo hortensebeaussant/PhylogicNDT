@@ -129,7 +129,7 @@ class TumorSample:
             mut_with_ccf_dat = self._read_absolute_results(filen)
         elif input_type == 'tab':
             mut_with_ccf_dat = self._read_ccf_from_txt(filen)
-        elif input_type == 'calc_ccf': # TODO: implement this
+        elif input_type in ('calc_ccf', 'purple'): # TODO: implement this
             # when only abs CN and ref/alt counts present
             if self._auto_file_type(filen) != 'tab':
                 raise NotImplementedError('CCF calculation only implemented for plain text files')
@@ -421,6 +421,8 @@ class TumorSample:
         if input_type == 'auto':
             if not seg_file:
                 input_type = 'none'
+            elif seg_file.endswith('.somatic.tsv'):
+                input_type = 'purple'
             elif seg_file.endswith('.segtab.txt'):
                 input_type = 'absolute'
             elif seg_file.endswith('.tsv'):
@@ -432,6 +434,56 @@ class TumorSample:
 
         if input_type == 'none':
             return None
+        elif input_type == 'purple':
+            with open(seg_file, 'r') as fh:
+                header = fh.readline().strip('\n').split('\t')
+                for line in fh:
+                    try:
+                        row = dict(zip(header, line.strip('\n').split('\t')))
+                        chrN = row['chromosome']
+                        if chrN.startswith('chr'):
+                            chrN = chrN[3:]
+                        start = int(row['start'])
+                        end = int(row['end'])
+                        purple_a1 = float(row['minorAlleleCopyNumber'])
+                        purple_a2 = float(row['majorAlleleCopyNumber'])
+                        
+                        if abs(purple_a1 - round(purple_a1)) < .1:
+                            # clonal state (close to integer with noise)
+                            local_cn_a1 = int(round(purple_a1))
+                            ccf_hat_a1 = 0
+                        else:
+                            # subclonal state
+                            if purple_a1 > 1:
+                                local_cn_a1 = np.ceil(purple_a1)
+                                ccf_hat_a1 = purple_a1 - np.floor(purple_a1)
+                            else:
+                                local_cn_a1 = np.floor(purple_a1)
+                                ccf_hat_a1 = np.ceil(purple_a1) - purple_a1
+
+                        if abs(purple_a2 - round(purple_a2)) < .1:
+                            # clonal state (close to integer with noise)
+                            local_cn_a2 = int(round(purple_a2))
+                            ccf_hat_a2 = 0
+                        else:
+                            # subclonal state
+                            if purple_a2 > 1:
+                                local_cn_a2 = np.ceil(purple_a2)
+                                ccf_hat_a2 = purple_a2 - np.floor(purple_a2)
+                            else:
+                                local_cn_a2 = np.floor(purple_a2)
+                                ccf_hat_a2 = np.ceil(purple_a2) - purple_a2
+
+                        seg_tree[chrN].add(Interval(start, end,
+                                                    (self.sample_name, {'cn_a1': local_cn_a1, 'cn_a2': local_cn_a2,
+                                                                        'ccf_hat_a1': ccf_hat_a1,
+                                                                        'ccf_high_a1': ccf_hat_a1+0.1,
+                                                                        'ccf_low_a1': ccf_hat_a1-0.1,
+                                                                        'ccf_hat_a2': ccf_hat_a2,
+                                                                        'ccf_high_a2': ccf_hat_a2+0.1,
+                                                                        'ccf_low_a2': ccf_hat_a2-0.1})))
+                    except ValueError:
+                        continue
         elif input_type == 'absolute':
             print('Warning: using ABSOLUTE seg file')
             with open(seg_file, 'r') as fh:
@@ -463,17 +515,34 @@ class TumorSample:
         elif input_type == 'timing_format':
             with open(seg_file, 'r') as fh:
                 header = fh.readline().strip('\n').split('\t')
-                for line in fh:
-                    try:
-                        row = dict(zip(header, line.strip('\n').split('\t')))
-                        chrN = row['Chromosome']
-                        start = int(float(row['Start']))
-                        end = int(float(row['End']))
-                        cn_a1 = float(row['A1.Seg.CN'])
-                        cn_a2 = float(row['A2.Seg.CN'])
-                        seg_tree[chrN].add(Interval(start, end, (self.sample_name, {'cn_a1': cn_a1, 'cn_a2': cn_a2})))
-                    except ValueError:
-                        continue
+                # for purple
+                if seg_file.endswith('.somatic.tsv'):
+                    for line in fh:
+                        try:
+                            row = dict(zip(header, line.strip('\n').split('\t')))
+                            chrN = row['chromosome']
+                            if chrN.startswith('chr'):
+                                chrN = chrN[3:]
+                            start = int(row['start'])
+                            end = int(row['end'])
+                            cn_a1 = float(row['minorAlleleCopyNumber'])
+                            cn_a2 = float(row['majorAlleleCopyNumber'])
+                        except ValueError:
+                            continue
+                # other formats
+                else:
+                    for line in fh:
+                        try:
+                            row = dict(zip(header, line.strip('\n').split('\t')))
+                            chrN = row['Chromosome']
+                            start = int(float(row['Start']))
+                            end = int(float(row['End']))
+                            cn_a1 = float(row['A1.Seg.CN'])
+                            cn_a2 = float(row['A2.Seg.CN'])
+                        except ValueError:
+                            continue
+                seg_tree[chrN].add(Interval(start, end, (self.sample_name, {'cn_a1': cn_a1, 'cn_a2': cn_a2})))
+
         elif input_type == 'alleliccapseg':
             with open(seg_file, 'r') as fh:
                 header = fh.readline().strip('\n').split('\t')
