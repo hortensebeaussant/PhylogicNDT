@@ -15,10 +15,12 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/")
 # Remove all handlers associated with the root logger object.
 for handler in logging.root.handlers[:]:
     logging.root.removeHandler(handler)
-filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'phylogicndt.log')
-print(filename)
+#filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'phylogicndt.log')
+# place log file in working directory, to be able to use singularity
+filename = os.path.join(os.getcwd(), 'phylogicndt.log')
+# append log file if already exists
 logging.basicConfig(filename=filename,
-                    filemode='w',
+                    filemode='a',
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     datefmt='%d-%b-%y %H:%M:%S',
                     level=getattr(logging, "INFO"))
