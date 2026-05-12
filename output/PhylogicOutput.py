@@ -233,13 +233,12 @@ class PhylogicOutput(object):
                     cluster_dict[c]['muts'][mut_name]['ccf_dist'] = [float(fields[k]) for k in ccf_dist_keys]
                 if sample == sample_names[0]:
                     n_muts[c] += 1
-                    if hugo in drivers:
-                        if "." in mut_name: #Non-coding mutations don't have this
-                            mut_name_prot_change = mut_name.split(".")[1]
-                            old_aa = mut_name_prot_change[0] #Previous amino acid
-                            new_aa = mut_name_prot_change[-1] #New amino acid
-                            if new_aa != old_aa: #If mutation is non-silent, only then add it to 'drivers'
-                                cluster_dict[c]['drivers'].append(mut_name)
+                    if "." in mut_name: #Non-coding mutations don't have this, show all coding mutations, even if they are not drivers
+                        mut_name_prot_change = mut_name.split(".")[1]
+                        old_aa = mut_name_prot_change[0] #Previous amino acid
+                        new_aa = mut_name_prot_change[-1] #New amino acid
+                        if new_aa != old_aa: #If mutation is non-silent, only then add it to 'drivers'
+                            cluster_dict[c]['drivers'].append(mut_name)
         if cnv_file:
             unique_cnvs = {s: set() for s in sample_names}
             with open(cnv_file, 'r') as cnvs:
