@@ -41,7 +41,7 @@ class TumorSample:
 
     common_field_map = {"Hugo_Symbol": "gene", "t_alt_count": "alt_cnt", "observed_alt": "alt_cnt", "ref": "ref_cnt",
                         "t_ref_count": "ref_cnt", "Variant_Classification": "mut_category",
-                        "Protein_Change": "prot_change", "Variant_Type": "type_"}  # For reading TSV files.
+                        "Protein_Change": "prot_change", "Variant_Type": "type_", "local_cn_a1": "local_cn_a1", "local_cn_a2": "local_cn_a2"}  # For reading TSV files.
 
     def __init__(self, file_name, input_type,
                  indiv=None,

@@ -196,8 +196,8 @@ class SomMutation:
         return self.var_str
 
     def clean_local_cn(self, cn1, cn2):
-        self.local_cn_a1 = float(cn1) if not np.nan else np.nan
-        self.local_cn_a2 = float(cn2) if not np.nan else np.nan
+        self.local_cn_a1 = float(cn1) if str(cn1).lower() != 'nan' else np.nan
+        self.local_cn_a2 = float(cn2) if str(cn2).lower() != 'nan' else np.nan
 
     # update allelic copy number AND assignment of mutation to a copy number event (arm level)
     def _phase_mutation(self, bam_file):

@@ -337,6 +337,7 @@ class Patient:
         return NDHistogram(combined_ccf, [x.var_str for x in self.sample_list[0].concordant_variants])
 
     def cluster_temp_removed(self):
+        # assign temporarily removed mutations to clusters if they are close to the cluster CCFs in all samples, otherwise add to unclustered muts
         clust_CCF_results = self.ClusteringResults.clust_CCF_dens
         for mut in self.sample_list[0].low_coverage_mutations.values():
             mut_coincidence = np.ones(len(clust_CCF_results))
