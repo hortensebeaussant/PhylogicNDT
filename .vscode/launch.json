@@ -1,0 +1,86 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug PhylogicSim",
+            "type": "debugpy-old",
+            "request": "launch",
+            "program": "${workspaceFolder}/PhylogicNDT.py",
+            "cwd": "/data",
+            "console": "integratedTerminal",
+            "args": [
+                "PhylogicSim",
+                "-i", "MySimulation",
+                "-ns", "4"
+            ],
+            "subProcess": true
+        },
+        {
+            "name": "Debug Cluster",
+            "type": "debugpy-old",
+            "request": "launch",
+            "program": "${workspaceFolder}/PhylogicNDT.py",
+            "cwd": "/data",
+            "console": "integratedTerminal",
+            "args": [
+                "Cluster",
+                "-i", "A10080001",
+                "-sif", "/data/A10080001.sif",
+                "--maf_input_type", "calc_ccf",
+                "--impute"
+            ],
+            "subProcess": true
+        },
+        {
+            "name": "Debug Cluster purple",
+            "type": "debugpy-old",
+            "request": "launch",
+            "program": "${workspaceFolder}/PhylogicNDT.py",
+            "cwd": "/data",
+            "console": "integratedTerminal",
+            "args": [
+                "Cluster",
+                "-i", "A10080001",
+                "-sif", "/data/A10080001.sif",
+                "--maf_input_type", "purple",
+                //"--impute"
+            ],
+            "subProcess": true
+        },
+        {
+            "name": "Debug Cluster and BuildTree purple",
+            "type": "debugpy-old",
+            "request": "launch",
+            "program": "${workspaceFolder}/PhylogicNDT.py",
+            "cwd": "/data",
+            "console": "integratedTerminal",
+            "args": [
+                "Cluster",
+                "--seed", "1000",
+                "-i", "A10080001",
+                "-sif", "/data/A10080001.sif",
+                "--maf_input_type", "purple",
+                "--impute",
+                "-rb"
+            ],
+            "subProcess": true
+        },
+        {
+            "name": "Debug SinglePatientTiming purple",
+            "type": "debugpy-old",
+            "request": "launch",
+            "program": "${workspaceFolder}/PhylogicNDT.py",
+            "cwd": "/data",
+            "console": "integratedTerminal",
+            "args": [
+                "Timing",
+                "-i", "A10080001",
+                "-sif", "/data/A10080001_seg.sif",
+            ],
+            "subProcess": true
+        }
+    ]
+}
